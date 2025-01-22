@@ -1,0 +1,30 @@
+
+fluxcli/                # ${PRJ_ROOT}
+├── fluxcli/            # ${APP_ROOT}
+│   ├── __init__.py
+│   ├── main.py         # Entry point (REPL logic, load modules)
+│   ├── settings.py     # Loads/saves user config from ~/.fluxcli/fluxcli.yaml
+│   ├── modules/   <----------- All modules found here 
+│   │   ├── nmap/      <---------- All modules have thier own named folder
+│   │   │   ├── __init__.py
+│   │   │   ├── module.py       <-- All modules shall be named module.py
+│   │   │   └── commands.yaml   <-- Defines commands - "pingsweep", "portscan", etc.
+│   │   ├── tmux/
+│   │   │   ├── __init__.py
+│   │   │   ├── module.py
+│   │   │   └── commands.yaml   <-- Defines "attach", "list-sessions", etc.
+│   │   └── ... more modules ...
+│   └── utils/
+│       ├── __init__.py
+│       └── parser.py   # TODO
+├── config/
+│   └── commands.yaml   # Defines native commands
+├── docs/
+|   └── setup_env.md    # Changelog info for setup_env.py script
+|   └── ProjectDir.txt  # This file.
+├── setup.py            # For installing fluxcli as a package
+├── setup_env.py        # Setup python environment 
+├── requirements.txt    # Dependencies (PyYAML, etc.)
+├── README.md           # Project info
+└── CHANGELOG.md        # Project Changelog
+└── LICENSE             # License info
