@@ -144,14 +144,126 @@ Ensure you have the following installed:
      .env\.FluxCLI\Scripts\activate.bat
      ```
 
+---
 
-4. Install dependencies:
 
-   ```bash
-   fluxcli getDeps
-   ```
+## **Interactive Shell Mode**
+
+When FluxCLI is run without any arguments, it launches into an **interactive shell mode**, providing a REPL-style (Read-Eval-Print Loop) environment for efficient command execution and exploration. This live shell allows users to work within the FluxCLI ecosystem without needing to re-enter the binary for each command, offering a more streamlined and productive workflow.
+
+### **Key Benefits of the Interactive Shell Mode**
+
+1. **Persistent Context:**  
+   - FluxCLI retains the state of loaded modules, user-defined variables, and session history, reducing redundancy when executing multiple related commands.
+   
+2. **Autocomplete Support:**  
+   - Commands, options, and module parameters can be auto-completed, making navigation and usage quicker and easier.
+   
+3. **Enhanced User Experience:**  
+   - Custom prompts, colorized outputs, and helpful suggestions provide a more interactive and user-friendly experience.
 
 ---
+
+### **Launching the FluxCLI Interactive Shell**
+
+To enter the interactive shell, simply run:
+
+```bash
+fluxcli
+```
+
+Example output:
+
+```plaintext
+Welcome to FluxCLI - Your Simplified CLI Interface
+Type 'help' to see available commands.
+
+[ FluxCLI ] > _
+```
+
+---
+
+### **Impact on Command Usage**
+
+Once inside the interactive shell, commands are executed **without prefixing `fluxcli`**, providing a more natural command-line experience.
+
+#### **Example Usage (Inside FluxCLI Shell)**
+
+**Traditional CLI Usage (Outside FluxCLI shell):**
+```bash
+fluxcli load nmap
+fluxcli pingsweep 10.0.0.1/24
+fluxcli help
+```
+
+**Interactive Shell Usage (Inside FluxCLI shell):**
+```plaintext
+[ FluxCLI ] > load nmap
+Module 'nmap' loaded successfully.
+
+[ FluxCLI ] > pingsweep 10.0.0.1/24
+{
+  "hosts": [
+    {
+      "ip": "192.168.1.1",
+      "hostname": "rabbit.hole.net",
+      "mac": "C4:41:1E:0E:70:21"
+    }
+  ]
+}
+
+[ FluxCLI ] > help
+Available Commands:
+- load <module>
+- pingsweep <subnet>
+- sysinfo
+- exit
+```
+
+#### **Command Usage from Outside vs. Inside the Shell**
+
+| Action                          | Outside Shell (`fluxcli <cmd>`) | Inside Shell (`[ FluxCLI ] >`) |
+|---------------------------------|--------------------------------|------------------------------|
+| Load a module                    | `fluxcli load nmap`             | `load nmap`                   |
+| Perform a ping sweep              | `fluxcli pingsweep 10.0.0.1/24`  | `pingsweep 10.0.0.1/24`        |
+| View help                         | `fluxcli help`                   | `help`                         |
+| Exit                              | `exit`                           | `exit`                         |
+
+---
+
+### **Exit Interactive Shell**
+
+To exit the interactive shell, simply type:
+
+```plaintext
+[ FluxCLI ] > exit
+```
+
+---
+
+### **Environment Awareness in the Shell**
+
+FluxCLI automatically detects whether it is running inside an active environment and ensures the appropriate modules are loaded and available for execution. If the environment is not activated, the shell will provide a prompt asking whether the user would like to activate it:
+
+```plaintext
+[WARNING] You are not in an active FluxCLI environment.
+Would you like to activate '.env/.FluxCLI'? (y/n): y
+[INFO] FluxCLI environment activated.
+```
+
+---
+
+### **Command History and Session Persistence**
+
+The FluxCLI shell maintains a command history within the current session, enabling users to navigate previous commands using the up/down arrow keys.
+
+Example:
+
+```plaintext
+[ FluxCLI ] > load nmap
+[ FluxCLI ] > pingsweep 10.0.0.1/24
+# Pressing the 'up' arrow will recall previous commands
+```
 
 ## **Usage Examples**
 
@@ -180,29 +292,14 @@ Ensure you have the following installed:
 
 ## **Building a Module**
 
-FluxCLI’s modular architecture allows easy extension through the creation of custom modules.
-
-### **Module Structure**
-
-Each module resides under the `fluxcli/modules/` directory:
-
-```
-fluxcli/modules/
-├── nmap/
-│   ├── __init__.py
-│   ├── module.py
-│   └── commands.yaml
-```
-
-### **Steps to Create a New Module**
-
-TODO : FluxCLI is designed with extensibility in mind. Check back soon for more details.
+FluxCLI is built with extendability in mind. Check back soon for more details.
 ---
 
 ## **Native Commands**
 
 Native commands are built directly into FluxCLI and do not require module loading. Examples include:
 
+- `load` - To load a module
 - `sysinfo` – Displays system information.
 - `version` – Prints the current version of FluxCLI.
 - `help` – Lists all available commands.
